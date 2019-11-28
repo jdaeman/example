@@ -32,11 +32,16 @@ int main(void)
 		memcpy(ifr.ifr_name, itf->if_name, sizeof(ifr.ifr_name)); //necessary "ref dev_get_by_name()"
 		printf("%d, %s\n", itf->if_index, itf->if_name);
 
-		ioctl(sock, SIOCGIFADDR, &ifr);
+		ioctl(sock, SIOCGIFADDR, &ifr); //IntereFaceADDRess
 		printf("%s\n", inet_ntoa(*(struct in_addr *)&ifr.ifr_addr.sa_data[2]));
 
-		ioctl(sock, SIOCGIFHWADDR, &ifr);	
+		ioctl(sock, SIOCGIFHWADDR, &ifr); //InterFaceHWADDRess	
 		printf("%s\n", ether_ntoa((struct ether_addr *)ifr.ifr_hwaddr.sa_data));
+
+		ioctl(sock, SIOCGIFFLAGS, &ifr); //InterFaceFLAGS
+		printf("%d\n", ifr.ifr_flags);
+
+		puts("");
 	}
 
 	if_freenameindex(if_arr);
