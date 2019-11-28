@@ -16,30 +16,29 @@ static int print_info(void)
 		return -1;
 
 	printk("-----net_device info-----\n");
-	printk("name: %s\n", dev->name);
-	printk("ifindex: %d\n", dev->ifindex);
-	printk("dev_addr: %pM\n", dev->dev_addr);
-	printk("broadcast: %pM\n", dev->broadcast);
-	printk("flags: %u\n", dev->flags);
-	printk("promiscuity: %u\n", dev->promiscuity);
+	printk("name: %s\n", dev->name); //interface name
+	printk("ifindex: %d\n", dev->ifindex); //interface index
+	printk("dev_addr: %pM\n", dev->dev_addr); //hw address
+	printk("broadcast: %pM\n", dev->broadcast); //hw broadcast address
+	printk("flags: %u\n", dev->flags); //interface state "ref, ifconfig"
+	printk("promiscuity: %u\n", dev->promiscuity); //promiscious mode flag
 
 	if (dev->ip_ptr)
 		addrs = dev->ip_ptr->ifa_list;
 	
 	if (addrs)
 	{
-		printk("ifa_local: %pI4\n", &addrs->ifa_local);
-		printk("ifa_address: %pI4\n", &addrs->ifa_address);
-		printk("ifa_mask: %pI4\n", &addrs->ifa_mask);
-		printk("ifa_broadcast: %pI4\n", &addrs->ifa_broadcast);
+		printk("ifa_local: %pI4\n", &addrs->ifa_local); //ip address
+		printk("ifa_address: %pI4\n", &addrs->ifa_address); //;;
+		printk("ifa_mask: %pI4\n", &addrs->ifa_mask); //subnet mask
+		printk("ifa_broadcast: %pI4\n", &addrs->ifa_broadcast); //ip broadcast address
 	}
 
-	wdev = dev->ieee80211_ptr;
+	wdev = dev->ieee80211_ptr; //wireless device
 	if (!wdev)
 		return -1;
 
 	return -1;
-
 }
 
 int test_init(void)
@@ -47,6 +46,7 @@ int test_init(void)
 	if (!if_name)
 		return -1;
 
+	//always return -1, so dont care about rmmod
 	return print_info();	
 }
 
@@ -57,6 +57,6 @@ void test_exit(void)
 
 module_init(test_init);
 module_exit(test_exit);
-MODULE_AUTHOR("test_kernel");
+MODULE_AUTHOR("testkernel.tistory.com");
 MODULE_DESCRIPTION("struct net_device example");
 MODULE_LICENSE("GPL");
