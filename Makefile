@@ -1,4 +1,6 @@
-obj-m := test.o
+obj-m := netfilter.o
+
+test-y := test.o
 
 KDIR := /lib/modules/$(shell uname -r)/build
 PWD := $(shell pwd)
