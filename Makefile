@@ -1,4 +1,4 @@
-obj-m := gw.o
+obj-m := test.o
 
 
 KDIR := /lib/modules/$(shell uname -r)/build

@@ -2,9 +2,14 @@
 #include <linux/kernel.h>
 #include <linux/netdevice.h>
 #include <linux/inetdevice.h>
+#include <net/cfg80211.h>
 
 char * if_name = NULL;
 module_param(if_name, charp, 0644);
+
+const char * iftype[] = {"Unspecified", "Adhoc", "Managed", "AP", "AP VLAN",
+			"WDS", "Monitor", "Mesh Point", "P2P Client", "P2P Go",
+			"P2P Device", "OCB", "NAN"};
 
 static int print_info(void)
 {
@@ -21,6 +26,7 @@ static int print_info(void)
 	printk("dev_addr: %pM\n", dev->dev_addr); //hw address
 	printk("broadcast: %pM\n", dev->broadcast); //hw broadcast address
 	printk("flags: %u\n", dev->flags); //interface state "ref, ifconfig"
+	printk("isrunning: %s\n", netif_running(dev) ? "Yes" : "No");
 	printk("promiscuity: %u\n", dev->promiscuity); //promiscious mode flag
 
 	if (dev->ip_ptr)
@@ -37,6 +43,8 @@ static int print_info(void)
 	wdev = dev->ieee80211_ptr; //wireless device
 	if (!wdev)
 		return -1;
+	printk("-----wireless info-----\n");
+	printk("iftype: %s\n", iftype[wdev->iftype]);	
 
 	return -1;
 }
